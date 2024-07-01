@@ -1,5 +1,5 @@
-let starterPicURLs = [
-    [
+const starterPicURLs = {
+    normal: [
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", // Bulbasaur
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png", // Charmander
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png", // Squirtle
@@ -29,7 +29,7 @@ let starterPicURLs = [
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/909.png", // Fuecoco
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/912.png", // Quaxly
     ],
-    [
+    shiny: [
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png", // Bulbasaur
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png", // Charmander
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/7.png", // Squirtle
@@ -59,13 +59,15 @@ let starterPicURLs = [
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/909.png", // Fuecoco
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/912.png", // Quaxly
     ]
-];
+};
 
 function displayRandomStarterImage() {
     if (Math.random() < .9) {
-        randomImageURL = starterPicURLs[0][Math.floor(Math.random() * starterPicURLs[0].length)];
+        randomImageURL = starterPicURLs["normal"][Math.floor(Math.random() * starterPicURLs["normal"].length)];
+        document.getElementById("starter").setAttribute("alt", "A starter pokemon!");
     } else {
-        randomImageURL = starterPicURLs[1][Math.floor(Math.random() * starterPicURLs[0].length)];
+        randomImageURL = starterPicURLs["shiny"][Math.floor(Math.random() * starterPicURLs["normal"].length)];
+        document.getElementById("starter").setAttribute("alt", "A shiny starter pokemon!!!");
     }
     document.getElementById("starter").setAttribute("src", randomImageURL);
 }
