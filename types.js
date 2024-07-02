@@ -13,32 +13,33 @@ async function getTypeData() {
     return data["results"];
 }
 
-async function createAccordianItem(data, count) {
+async function createAccordionItem(data, count) {
     // Element creation
     // Item Wrapper
     let item = document.createElement("div");
-    item.setAttribute("class", "accordian-item");
+    item.setAttribute("class", "accordion-item");
     // Header
     let header = document.createElement("h2");
-    header.setAttribute("class", "accordian-header");
+    header.setAttribute("class", "accordion-header");
     header.setAttribute("id", `heading${count}`);
     // Button
     let button = document.createElement("button");
-    button.setAttribute("class", "accordian-button");
+    button.setAttribute("class", "accordion-button");
     button.setAttribute("type", "button");
     button.setAttribute("data-bs-toggle", "collapse");
     button.setAttribute("data-bs-target", `#collapse${count}`);
     button.setAttribute("aria-expanded", "true");
     button.setAttribute("aria-controls", `collapse${count}`);
+    button.innerText = data["name"][0].toUpperCase() + data["name"].slice(1);
     // Collapser
     let collapser = document.createElement("div");
     collapser.setAttribute("id", `collapse${count}`);
-    collapser.setAttribute("class", "accordian-collapse collapse");
+    collapser.setAttribute("class", "accordion-collapse collapse");
     collapser.setAttribute("aria-labelledby", `heading${count}`);
     collapser.setAttribute("data-bs-parent", "#pokeCcordion");
     // Body
     let innerBody = document.createElement("div");
-    collapser.setAttribute("class", "accordian-body");
+    innerBody.setAttribute("class", "accordion-body");
     innerBody.innerHTML = `Test body ${count}`
 
     // Nesting elements
@@ -50,7 +51,7 @@ async function createAccordianItem(data, count) {
     return item;
 }
 
-async function createAccordian() {
+async function createAccordion() {
     // Creating base element
     let accordion = document.createElement("div");
     accordion.setAttribute("class", "accordion");
@@ -58,15 +59,15 @@ async function createAccordian() {
 
     // Creating and adding item for every Type in results
     typeCollection = await getTypeData();
-    let counter = 1;
+    let counter = 0;
     typeCollection.forEach(async(element) => {
-        const item = await createAccordianItem(element, counter);
-        accordion.appendChild(item);
         counter += 1;
+        let item = await createAccordionItem(element, counter);
+        accordion.appendChild(item);
     });
 
     // Adding Accordion Element to page
      document.getElementById("accordionHolder").appendChild(accordion);
 }
 
-document.addEventListener("DOMContentLoaded", createAccordian);
+document.addEventListener("DOMContentLoaded", createAccordion);
