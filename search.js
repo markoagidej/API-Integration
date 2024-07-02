@@ -1,7 +1,6 @@
 async function fetchPokemon(input) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${input}`);
-    console.log(response)
-    const data = response.json()
+    const data = await response.json()
     return data;
 }
 
