@@ -13,7 +13,62 @@ async function getTypeData() {
     return data["results"];
 }
 
-async function createAccordionItem(data, count) {
+async function fetchPokemon(pokeURL) {
+    const response = await fetch(pokeURL);
+    const data = await response.json()
+    return data;
+}
+
+async function createPokeCard(pokeURL) {
+    // Creating card elements
+    // Card Container
+    let pokeCard = document.createElement("div");
+    pokeCard.setAttribute("class", "card");
+    pokeCard.setAttribute("id", "pokeCard");
+    pokeCard.style.minWidth = "150px"
+    // Card Img
+    // let pokeImg = document.createElement("img");
+    // pokeImg.setAttribute("class", "card-img-top");
+    // pokeImg.setAttribute("id", "pokeImg");
+    // Card Body
+    let cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "cardBody");
+    // Name Link
+    let cardName = document.createElement("a");
+    cardName.setAttribute("href", "details.html")
+
+    // Nesting Elements
+    // pokeCard.appendChild(pokeImg);
+    pokeCard.appendChild(cardBody);
+    cardBody.appendChild(cardName);
+
+    // Placing pokemon data in card
+    let pokeData = await fetchPokemon(pokeURL);
+    cardName.innerText = pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1);
+    // pokeImg.setAttribute("src", pokeData["sprites"]["front_default"]);
+    // cardName.innerText = "Pickachu"
+    // pokeImg.setAttribute("src", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
+
+    return pokeCard;
+}
+
+async function createItemContents(typeURL) {
+    // getting pokemon of a type list
+    let response = await fetch(typeURL);
+    let typeData = await response.json();
+    let pokemonList = typeData["pokemon"];
+    // Creating container for all pokemon cards
+    let cardContainer = document.createElement("div");
+    cardContainer.setAttribute("class", "d-flex flex-wrap");
+    // Populating type container with all pokemon
+    pokemonList.forEach(async(element) => {
+        let card = await createPokeCard(element["pokemon"]["url"]);
+        cardContainer.appendChild(card)
+    });
+    return cardContainer;
+}
+
+async function createAccordionItem(typeData, count) {
     // Element creation
     // Item Wrapper
     let item = document.createElement("div");
@@ -25,12 +80,13 @@ async function createAccordionItem(data, count) {
     // Button
     let button = document.createElement("button");
     button.setAttribute("class", "accordion-button");
+    button.setAttribute("id", "accordionButton");
     button.setAttribute("type", "button");
     button.setAttribute("data-bs-toggle", "collapse");
     button.setAttribute("data-bs-target", `#collapse${count}`);
     button.setAttribute("aria-expanded", "true");
     button.setAttribute("aria-controls", `collapse${count}`);
-    button.innerText = data["name"][0].toUpperCase() + data["name"].slice(1);
+    button.innerText = typeData["name"][0].toUpperCase() + typeData["name"].slice(1);
     // Collapser
     let collapser = document.createElement("div");
     collapser.setAttribute("id", `collapse${count}`);
@@ -40,8 +96,9 @@ async function createAccordionItem(data, count) {
     // Body
     let innerBody = document.createElement("div");
     innerBody.setAttribute("class", "accordion-body");
-    innerBody.innerHTML = `Test body ${count}`
-
+    let contents = await createItemContents(typeData["url"]);
+    innerBody.appendChild(contents);
+    
     // Nesting elements
     item.appendChild(header);
     header.appendChild(button);
@@ -71,3 +128,26 @@ async function createAccordion() {
 }
 
 document.addEventListener("DOMContentLoaded", createAccordion);
+
+// Adding click listener to populate only the specific cards in this type
+// let accordionButtons = document.querySelectorAll("[id='accordionButton']");
+// accordionButtons.forEach(function(element) {
+//     element.addEventListener("click", function () {
+//         let typeText = element.innerText.toLowerCase();
+//         let contents = createItemContents(`https://pokeapi.co/api/v2/type/${typeText}`);
+//         let itemElement = element.parentElement.parentElement;
+//         let innerBody = itemElement.children[0].children[0];
+//         if (!innerBody.innerHTML) {
+//             innerBody.appendChild(contents);
+//         }
+//     })
+// });
+// document.getElementById("accordionButton").addEventListener("click", function(element) {
+//     let typeText = element.innerText.toLowerCase();
+//     let contents = createItemContents(`https://pokeapi.co/api/v2/type/${typeText}`);
+//     let itemElement = element.parentElement.parentElement;
+//     let innerBody = itemElement.children[0].children[0];
+//     if (!innerBody.innerHTML) {
+//         innerBody.appendChild(contents);
+//     }
+// });

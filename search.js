@@ -6,13 +6,12 @@ async function fetchPokemon(input) {
 
 document.getElementById("searchForm").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const searchValue = document.getElementById("searchField").value;
+    const searchValue = document.getElementById("searchField").value.toLowerCase();
     const notFoundDiv = document.getElementById("notFound");
     const card = document.getElementById("pokeCard");
     try {
         const pokeData = await fetchPokemon(searchValue);
         notFoundDiv.setAttribute("class", "d-none");
-        console.log(pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1));
         document.getElementById("pokeImg").setAttribute("src", pokeData["sprites"]["front_default"]);
         document.getElementById("cardName").innerHTML = pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1);
         card.setAttribute("class", "card d-block");
