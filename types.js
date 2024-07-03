@@ -1,5 +1,3 @@
-let typeCollection = [];
-
 async function getTypesData() {
     // getting count limit
     let url = `https://pokeapi.co/api/v2/type?limit=1`
@@ -112,7 +110,7 @@ async function createAccordion() {
     accordion.setAttribute("id", "pokeCcordion");
 
     // Creating and adding item for every Type in results
-    typeCollection = await getTypesData();
+    const typeCollection = await getTypesData();
     let counter = 0;
     typeCollection.forEach(async(element) => {
         counter += 1;

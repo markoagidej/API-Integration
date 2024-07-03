@@ -1,5 +1,3 @@
-let abilityCollection = [];
-
 async function getAbilitiesData() {
     // getting count limit
     let url = `https://pokeapi.co/api/v2/ability?limit=1`
@@ -77,7 +75,7 @@ async function createAccordion() {
     accordion.setAttribute("id", "pokeBilities");
 
     // Getting and sorting results of all abilities
-    abilityCollection = await getAbilitiesData();
+    const abilityCollection = await getAbilitiesData();
     let abilitiyNames = [];
     abilityCollection.forEach((element) => {
         abilitiyNames.push(element["name"]);
