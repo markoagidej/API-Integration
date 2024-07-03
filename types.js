@@ -76,7 +76,7 @@ async function createAccordionItem(typeData, count) {
     header.setAttribute("id", `heading${count}`);
     // Button
     let button = document.createElement("button");
-    button.setAttribute("class", "accordion-button");
+    button.setAttribute("class", "accordion-button collapsed");
     button.setAttribute("id", "accordionButton");
     button.setAttribute("type", "button");
     button.setAttribute("data-bs-toggle", "collapse");

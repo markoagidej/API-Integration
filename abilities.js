@@ -26,6 +26,9 @@ async function getAbilityDescription(abilityName) {
             description = effect["effect"];
         }
     });
+    if (!description) {
+        description = `No description found in database for ${abilityName}`;
+    }
     return description;
 };
 
@@ -40,7 +43,7 @@ async function createAccordionItem(abilityName, count) {
     header.setAttribute("id", `heading${count}`);
     // Button
     let button = document.createElement("button");
-    button.setAttribute("class", "accordion-button");
+    button.setAttribute("class", "accordion-button collapsed");
     button.setAttribute("id", "accordionButton");
     button.setAttribute("type", "button");
     button.setAttribute("data-bs-toggle", "collapse");
@@ -51,9 +54,8 @@ async function createAccordionItem(abilityName, count) {
     // Collapser
     let collapser = document.createElement("div");
     collapser.setAttribute("id", `collapse${count}`);
-    collapser.setAttribute("class", "accordion-collapse collapse");
+    collapser.setAttribute("class", "accordion-collapse collapse bg-light border-bottom border-secondary");
     collapser.setAttribute("aria-labelledby", `heading${count}`);
-    collapser.setAttribute("data-bs-parent", "#pokeCcordion");
     // Body
     let innerBody = document.createElement("div");
     innerBody.setAttribute("class", "accordion-body");
