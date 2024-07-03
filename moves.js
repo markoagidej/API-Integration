@@ -12,7 +12,7 @@ async function getMovesData() {
 };
 
 async function getMoveDescription(moveName) {
-    // Gettign move data
+    // Getting move data
     let url = `https://pokeapi.co/api/v2/move/${moveName}`;
     const response = await fetch(url);
     const data = await response.json();
