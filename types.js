@@ -1,6 +1,6 @@
 let typeCollection = [];
 
-async function getTypeData() {
+async function getTypesData() {
     // getting count limit
     let url = `https://pokeapi.co/api/v2/type?limit=1`
     const countResponse = await fetch(url);
@@ -11,13 +11,13 @@ async function getTypeData() {
     const response = await fetch(url);
     const data = await response.json();
     return data["results"];
-}
+};
 
 async function fetchPokemon(pokeURL) {
     const response = await fetch(pokeURL);
     const data = await response.json();
     return data;
-}
+};
 
 function createPokeCard(pokeName) {
     // Creating card elements
@@ -47,7 +47,7 @@ function createPokeCard(pokeName) {
     });
 
     return pokeCard;
-}
+};
 
 async function createItemContents(typeURL) {
     // getting pokemon of a type list
@@ -63,7 +63,7 @@ async function createItemContents(typeURL) {
         cardContainer.appendChild(card)
     });
     return cardContainer;
-}
+};
 
 async function createAccordionItem(typeData, count) {
     // Element creation
@@ -103,7 +103,7 @@ async function createAccordionItem(typeData, count) {
     collapser.appendChild(innerBody);
 
     return item;
-}
+};
 
 async function createAccordion() {
     // Creating base element
@@ -112,7 +112,7 @@ async function createAccordion() {
     accordion.setAttribute("id", "pokeCcordion");
 
     // Creating and adding item for every Type in results
-    typeCollection = await getTypeData();
+    typeCollection = await getTypesData();
     let counter = 0;
     typeCollection.forEach(async(element) => {
         counter += 1;
@@ -122,6 +122,6 @@ async function createAccordion() {
 
     // Adding Accordion Element to page
      document.getElementById("accordionHolder").appendChild(accordion);
-}
+};
 
 document.addEventListener("DOMContentLoaded", createAccordion);
