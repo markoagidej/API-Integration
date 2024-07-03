@@ -13,7 +13,7 @@ document.getElementById("searchForm").addEventListener("submit", async (event) =
         const pokeData = await fetchPokemon(searchValue);
         notFoundDiv.setAttribute("class", "d-none");
         document.getElementById("pokeImg").setAttribute("src", pokeData["sprites"]["front_default"]);
-        document.getElementById("cardName").innerHTML = pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1);
+        document.getElementById("cardName").innerText = pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1);
         card.setAttribute("class", "card d-block");
     } catch (error) {
         card.setAttribute("class", "card d-none");
