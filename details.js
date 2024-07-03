@@ -1,3 +1,4 @@
+// Parse passed in parameter in URL to determine what pokemon name to display
 let queryString = decodeURIComponent(window.location.search);
 queryString = queryString.substring(1);
 let queries = queryString.split('=');

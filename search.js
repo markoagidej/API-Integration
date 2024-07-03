@@ -22,3 +22,11 @@ document.getElementById("searchForm").addEventListener("submit", async (event) =
         console.error("This is the error:", error);
     }
 });
+
+// Collect pokemon name and pass it into details page as URL parameter
+let pokemonName = "";
+document.getElementById("cardButton").addEventListener('click', function() {
+    let pokemonName = document.getElementById("cardName").innerText.toLowerCase();
+    let queryString = "?para1=" + pokemonName;
+    window.location.href = 'details.html' + queryString;
+});

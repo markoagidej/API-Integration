@@ -15,39 +15,36 @@ async function getTypeData() {
 
 async function fetchPokemon(pokeURL) {
     const response = await fetch(pokeURL);
-    const data = await response.json()
+    const data = await response.json();
     return data;
 }
 
-async function createPokeCard(pokeURL) {
+function createPokeCard(pokeName) {
     // Creating card elements
     // Card Container
     let pokeCard = document.createElement("div");
-    pokeCard.setAttribute("class", "card");
+    pokeCard.setAttribute("class", "card p-2");
     pokeCard.setAttribute("id", "pokeCard");
-    pokeCard.style.minWidth = "150px"
-    // Card Img
-    // let pokeImg = document.createElement("img");
-    // pokeImg.setAttribute("class", "card-img-top");
-    // pokeImg.setAttribute("id", "pokeImg");
+    pokeCard.style.minWidth = "150px";
     // Card Body
     let cardBody = document.createElement("div");
     cardBody.setAttribute("class", "cardBody");
     // Name Link
     let cardName = document.createElement("a");
-    cardName.setAttribute("href", "details.html")
 
     // Nesting Elements
-    // pokeCard.appendChild(pokeImg);
     pokeCard.appendChild(cardBody);
     cardBody.appendChild(cardName);
 
     // Placing pokemon data in card
-    let pokeData = await fetchPokemon(pokeURL);
-    cardName.innerText = pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1);
-    // pokeImg.setAttribute("src", pokeData["sprites"]["front_default"]);
-    // cardName.innerText = "Pickachu"
-    // pokeImg.setAttribute("src", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
+    cardName.innerText = pokeName[0].toUpperCase() + pokeName.slice(1);
+    
+    // Collect pokemon name listener and pass it into details page as URL parameter
+    pokeCard.addEventListener('click', function(element) {
+        let pokemonName = element.target.innerText.toLowerCase();
+        let queryString = "?para1=" + pokemonName;
+        window.location.href = 'details.html' + queryString;
+    });
 
     return pokeCard;
 }
@@ -62,7 +59,7 @@ async function createItemContents(typeURL) {
     cardContainer.setAttribute("class", "d-flex flex-wrap");
     // Populating type container with all pokemon
     pokemonList.forEach(async(element) => {
-        let card = await createPokeCard(element["pokemon"]["url"]);
+        let card = createPokeCard(element["pokemon"]["name"]);
         cardContainer.appendChild(card)
     });
     return cardContainer;
@@ -128,26 +125,3 @@ async function createAccordion() {
 }
 
 document.addEventListener("DOMContentLoaded", createAccordion);
-
-// Adding click listener to populate only the specific cards in this type
-// let accordionButtons = document.querySelectorAll("[id='accordionButton']");
-// accordionButtons.forEach(function(element) {
-//     element.addEventListener("click", function () {
-//         let typeText = element.innerText.toLowerCase();
-//         let contents = createItemContents(`https://pokeapi.co/api/v2/type/${typeText}`);
-//         let itemElement = element.parentElement.parentElement;
-//         let innerBody = itemElement.children[0].children[0];
-//         if (!innerBody.innerHTML) {
-//             innerBody.appendChild(contents);
-//         }
-//     })
-// });
-// document.getElementById("accordionButton").addEventListener("click", function(element) {
-//     let typeText = element.innerText.toLowerCase();
-//     let contents = createItemContents(`https://pokeapi.co/api/v2/type/${typeText}`);
-//     let itemElement = element.parentElement.parentElement;
-//     let innerBody = itemElement.children[0].children[0];
-//     if (!innerBody.innerHTML) {
-//         innerBody.appendChild(contents);
-//     }
-// });
