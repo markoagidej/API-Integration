@@ -54,6 +54,10 @@ function createTeamCard() {
     });
     resetButton.addEventListener("click", (event) => {
         event.preventDefault();
+        imgHolder.setAttribute("src", "");
+        pokeName.innerText = "Search!";
+        searchField.value = "";
+        infoDiv.innerText = "";
     });
 
     // Nesting
