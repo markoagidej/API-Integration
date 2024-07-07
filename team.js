@@ -41,7 +41,7 @@ function createTeamCard() {
     // Adding Event listeners
     searchButton.addEventListener("click", async (event) => {
         event.preventDefault();
-        const searchValue = searchField.value;
+        const searchValue = searchField.value.toLowerCase();
         try {
             const pokeData = await fetchPokemon(searchValue);
             imgHolder.setAttribute("src", pokeData["sprites"]["front_default"]);
