@@ -46,9 +46,15 @@ function createTeamCard() {
             const pokeData = await fetchPokemon(searchValue);
             imgHolder.setAttribute("src", pokeData["sprites"]["front_default"]);
             pokeName.innerText = pokeData["name"][0].toUpperCase() + pokeData["name"].slice(1);
-            infoDiv.innerText = "Pokemon Found!";
-        } catch (error) {         
-            console.log("here")   
+            infoDiv.innerText = ""
+            pokeData.types.forEach((type) => {
+                if (infoDiv.innerText) {
+                    infoDiv.innerText += `, ${type.type.name}`
+                } else {
+                    infoDiv.innerText = `Types: ${type.type.name}`
+                }
+            });
+        } catch (error) {
             infoDiv.innerText = "Pokemon Not Found!";
         }
     });
